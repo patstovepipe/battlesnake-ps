@@ -15,6 +15,8 @@ def index():
         bottle.request.urlparts.netloc
     )
 
+    print ('index')
+
     return {
         'name': 'PatStovepipe',
         'color': '#00ff00',
@@ -25,7 +27,10 @@ def index():
 @bottle.post('/start')
 def start():
     data = bottle.request.json
-    head_url = 'http://i.imgur.com/tWoo7jR.png' 
+    head_url = '%s://%s/static/head.png' % (
+        bottle.request.urlparts.scheme,
+        bottle.request.urlparts.netloc
+    )
 
     return {
         'name': 'PatStovepipe',
@@ -71,6 +76,7 @@ def move():
         else:
             morerandom = False
 
+    print ('Previous move: %s, Current Move: %s' % (prevmov, move))
 
     prevmov = move
 
