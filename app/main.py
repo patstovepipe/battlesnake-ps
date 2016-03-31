@@ -27,8 +27,6 @@ def start():
     data = bottle.request.json
     head_url = 'http://i.imgur.com/tWoo7jR.png' 
 
-    # TODO: Do things with data
-
     return {
         'name': 'PatStovepipe',
         'color': '#00ff00',
@@ -44,10 +42,9 @@ def move():
     data = bottle.request.json
 
     move = ''
+    morerandom = True
 
-    prevmov = move 
-
-    while prevmov == move:
+    while morerandom:
 
         rnd = random.randint(1,4)
 
@@ -64,7 +61,16 @@ def move():
             move = 'right'
             taunt = 'Pat Stovepipe moving right!'
 
-    # TODO: Do things with data
+        if ((move == 'up' and prevmov == 'down') or 
+            (move == 'down' and prevmov == 'up') or
+            (move == 'left' and prevmov == 'right') or
+            (move == 'right' and prevmov == 'left')):
+            morerandom = True
+        else
+            morerandom = False
+
+
+    prevmov = move
 
     return {
         'move': move,
@@ -75,8 +81,6 @@ def move():
 @bottle.post('/end')
 def end():
     data = bottle.request.json
-
-    # TODO: Do things with data
 
     return {
         'taunt': 'Pat Stovepipe ending!'
