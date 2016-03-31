@@ -29,7 +29,7 @@ def start():
 
     return {
         'name': 'PatStovepipe',
-        'color': '#00ff00',
+        'color': '#000080',
         'head': head_url,
         'taunt': 'Pat Stovepipe Starting!'
     }
@@ -66,7 +66,7 @@ def move():
             (move == 'left' and prevmov == 'right') or
             (move == 'right' and prevmov == 'left')):
             morerandom = True
-        else
+        else:
             morerandom = False
 
 
