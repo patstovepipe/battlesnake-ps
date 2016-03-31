@@ -80,6 +80,8 @@ def move():
 
     prevmov = move
 
+    print ('After - Previous move: %s, Current Move: %s' % (prevmov, move))
+
     return {
         'move': move,
         'taunt': taunt
