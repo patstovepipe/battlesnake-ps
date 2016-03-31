@@ -1,5 +1,6 @@
 import bottle
 import os
+import random
 
 
 @bottle.route('/static/<path:path>')
@@ -15,6 +16,7 @@ def index():
     )
 
     return {
+        'name': 'PatStovepipe',
         'color': '#00ff00',
         'head': head_url
     }
@@ -23,23 +25,50 @@ def index():
 @bottle.post('/start')
 def start():
     data = bottle.request.json
+    head_url = 'http://i.imgur.com/tWoo7jR.png' 
 
     # TODO: Do things with data
 
     return {
-        'taunt': 'battlesnake-python!'
+        'name': 'PatStovepipe',
+        'color': '#00ff00',
+        'head': head_url,
+        'taunt': 'Pat Stovepipe Starting!'
     }
 
+
+prevmov = ''
 
 @bottle.post('/move')
 def move():
     data = bottle.request.json
 
+    move = ''
+
+    prevmov = move 
+
+    while prevmov == move:
+
+        rnd = random.randint(1,4)
+
+        if rnd == 1:
+            move = 'up'
+            taunt = 'Pat Stovepipe moving up!'
+        elif rnd == 2:
+            move = 'left'
+            taunt = 'Pat Stovepipe moving left!'
+        elif rnd == 3:
+            move = 'down'
+            taunt = 'Pat Stovepipe moving down!'
+        elif  rnd == 4:
+            move = 'right'
+            taunt = 'Pat Stovepipe moving right!'
+
     # TODO: Do things with data
 
     return {
-        'move': 'north',
-        'taunt': 'battlesnake-python!'
+        'move': move,
+        'taunt': taunt
     }
 
 
@@ -50,7 +79,7 @@ def end():
     # TODO: Do things with data
 
     return {
-        'taunt': 'battlesnake-python!'
+        'taunt': 'Pat Stovepipe ending!'
     }
 
 
