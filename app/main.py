@@ -41,6 +41,8 @@ prevmov = ''
 def move():
     data = bottle.request.json
 
+    global prevmov
+
     move = ''
     morerandom = True
 
