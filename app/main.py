@@ -10,87 +10,80 @@ def static(path):
 
 @bottle.get('/')
 def index():
-    head_url = '%s://%s/static/head.png' % (
-        bottle.request.urlparts.scheme,
-        bottle.request.urlparts.netloc
-    )
-
-    print ('index')
+    print('index')
 
     return {
         'name': 'PatStovepipe',
-        'color': '#00ff00',
-        'head': head_url
+        'color': '#8B3A3A'
     }
 
 
 @bottle.post('/start')
 def start():
-    data = bottle.request.json
-    head_url = '%s://%s/static/head.png' % (
-        bottle.request.urlparts.scheme,
-        bottle.request.urlparts.netloc
-    )
-
     return {
         'name': 'PatStovepipe',
-        'color': '#000080',
-        'head': head_url,
+        'color': '#8B3A3A',
         'taunt': 'Pat Stovepipe Starting!'
     }
 
 
-prevmov = ''
+class Movement:
+    # string
+    move = ''
+    pos = []
+
 
 @bottle.post('/move')
 def move():
     data = bottle.request.json
 
-    global prevmov
+    moves = []
 
-    move = ''
-    morerandom = True
+    snakes = data['snakes']
+    curPos = []
 
-    while morerandom:
+    # Find my snake and get current position
+    for snake in range(len(snakes)):
+        if snake.name == 'PatStovepipe':
+            curPos = snake.coords[0]
 
-        rnd = random.randint(1,4)
+    x = Movement
+    x.move = 'up'
+    x.pos = [curPos[0], curPos[1] - 1]
+    moves.append(x)
+    x.move = 'left'
+    x.pos = [curPos[0] - 1, curPos[1]]
+    moves.append(x)
+    x.move = 'down'
+    x.pos = [curPos[0], curPos[1] + 1]
+    moves.append(x)
+    x.move = 'right'
+    x.pos = [curPos[0] + 1, curPos[0]]
+    moves.append(x)
 
-        if rnd == 1:
-            move = 'up'
-            taunt = 'Pat Stovepipe moving up!'
-        elif rnd == 2:
-            move = 'left'
-            taunt = 'Pat Stovepipe moving left!'
-        elif rnd == 3:
-            move = 'down'
-            taunt = 'Pat Stovepipe moving down!'
-        elif  rnd == 4:
-            move = 'right'
-            taunt = 'Pat Stovepipe moving right!'
+    # morerandom = True
 
-        if ((move == 'up' and prevmov == 'down') or 
-            (move == 'down' and prevmov == 'up') or
-            (move == 'left' and prevmov == 'right') or
-            (move == 'right' and prevmov == 'left')):
-            morerandom = True
-        else:
-            morerandom = False
+    for snake in range(len(snakes)):
+        for coord in snake.coords:
+            for move in moves:
+                if move == coord:
+                    moves.remove(move)
 
-    print ('Previous move: %s, Current Move: %s' % (prevmov, move))
+    for move in moves:
+        if move[0] < 0 or move[0] > 19 or move[1] < 0 or move[1] > 19:
+            moves.remove(move)
 
-    prevmov = move
-
-    print ('After - Previous move: %s, Current Move: %s' % (prevmov, move))
+    rnd = random.randint(0, len(moves) - 1)
 
     return {
-        'move': move,
-        'taunt': taunt
+        'move': moves[rnd],
+        'taunt': 'Moving'
     }
 
 
 @bottle.post('/end')
 def end():
-    data = bottle.request.json
+    # data = bottle.request.json
 
     return {
         'taunt': 'Pat Stovepipe ending!'
@@ -100,4 +93,4 @@ def end():
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
 if __name__ == '__main__':
-    bottle.run(application, host=os.getenv('IP', '0.0.0.0'), port=os.getenv('PORT', '8080'))
+    bottle.run(application, host=os.getenv('IP', '0.0.0.0'), port=os.getenv('PORT', '8081'))
