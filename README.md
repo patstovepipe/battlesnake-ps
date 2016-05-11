@@ -1,5 +1,9 @@
 # battlesnake-python
 
+This was cloned from [here](https://github.com/sendwithus/battlesnake-python).
+My attempt at a random battlesnake
+
+
 A simple [BattleSnake AI](http://battlesnake.io) written in Python. 
 
 Visit [battlesnake.io/readme](http://battlesnake.io/readme) for API documentation and instructions for running your AI.
@@ -57,7 +61,3 @@ or visit [http://APP_NAME.herokuapp.com](http://APP_NAME.herokuapp.com).
 ```
 heroku logs --tail
 ```
-
-## Questions?
-
-Email [battlesnake@sendwithus.com](mailto:battlesnake@sendwithus.com), or tweet [@send_with_us](http://twitter.com/send_with_us).
